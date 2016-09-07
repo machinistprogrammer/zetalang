@@ -43,6 +43,10 @@
     <DebugLevel>0</DebugLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="main.d" />
+    <Compile Include="zetac\ast.d" />
+    <Compile Include="zetac\common.d" />
+    <Compile Include="zetac\lexer.d" />
+    <Compile Include="zetac\parser.d" />
+    <Compile Include="zetac\utils.d" />
   </ItemGroup>
 </Project>
