@@ -1,4 +1,4 @@
-﻿module src.app;
+module app;
 
 import std.stdio;
 

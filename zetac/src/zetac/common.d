@@ -16,7 +16,7 @@ class SRCLocation
         this.file = file;
         auto lines = src[0 .. i].splitLines();
         this.line = lines.length;
-        this.colunm = lines[$ - 1].length;
+		this.colunm = line <= 0 ? 0 : lines[$ - 1].length;
     }
 
     override string toString()
