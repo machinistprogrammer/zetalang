@@ -11,6 +11,22 @@ import zetac.common : Stack, CompilerError;
 
 alias TokenStream = DList!Token;
 
+auto parse(string defaultName, TokenStream stream)
+{
+	struct Result
+	{
+		ASTModule astModule;
+		CompilerError error;
+	}
+
+	Result result;
+	try
+		result.astModule = parseModule(stream, new Stack!ASTNode(), defaultName);
+	catch(CompilerError e)
+		result.error = e;
+	return result;
+}
+
 ASTModule parseModule(TokenStream stream, Stack!ASTNode stack, string defaultName)
 {
 	auto astModule = new ASTModule(stream.front.loc, null, null);
@@ -74,7 +90,7 @@ ASTClass parseClass(TokenStream stream, Stack!ASTNode stack, string[] attribs = 
 	stack.push(astClass);
 	astClass.name = stream.expect(TokenType.tk_identifier).text;
 	if (stream.test(TokenType.tk_inherits))
-		astClass.inherits = parseDelimitedList!parseSymbolRef(stream, stack, TokenType.tk_comma);
+		astClass.inherits = parseDelimitedList!parseQuantifiedName(stream, stack, TokenType.tk_comma);
 	astClass.block = parseDeclarationBlock(stream, stack);
 	stack.pop();
 	return astClass;
@@ -89,7 +105,7 @@ ASTInterface parseInterface(TokenStream stream, Stack!ASTNode stack, string[] at
 	stack.push(astInterface);
 	astInterface.name = stream.expect(TokenType.tk_identifier).text;
 	if (stream.test(TokenType.tk_inherits))
-		astInterface.inherits = parseDelimitedList!parseSymbolRef(stream,
+		astInterface.inherits = parseDelimitedList!parseQuantifiedName(stream,
 			stack, TokenType.tk_comma);
 	astInterface.block = parseDeclarationBlock(stream, stack);
 	stack.pop();
@@ -346,7 +362,7 @@ ASTNode parseExpression(TokenStream stream, Stack!ASTNode stack)
 		case TokenType.tk_new:
 			auto result = new ASTNew(stream.front.loc, stack.peek);
 			stream.removeFront();
-			result.type = parseSymbolRef(stream, stack);
+			result.type = parseQuantifiedName(stream);
 			stream.expect(TokenType.tk_lparen);
 			if (stream.front.type != TokenType.tk_rparen)
 				result.args = parseDelimitedList!parseExpression(stream, stack, TokenType.tk_comma);
@@ -482,31 +498,17 @@ ASTNode parseNextExpression(TokenStream stream, Stack!ASTNode stack, ASTNode exp
 	}
 }
 
-ASTNode parseSymbolRef(TokenStream stream, Stack!ASTNode stack)
-{
-	auto identifier = new ASTIdentifier(stream.front.loc, stack.peek);
-	identifier.name = stream.expect(TokenType.tk_identifier).text;
-	ASTNode result = identifier;
-	while(stream.test(TokenType.tk_dot))
-	{
-		auto next = new ASTLookup(stream.front.loc, stack.peek);
-		next.name = stream.expect(TokenType.tk_identifier).text;
-		next.lhsExp = result;
-		result = next;
-	}
-	return result;
-}
 string[] parseAttributes(TokenStream stream, Stack!ASTNode stack, string[] attribs = null)
 {
 	stream.expect(TokenType.tk_attribute);
 	return attribs ~ parseDelimitedList!(string,(a,
-			b) => a.expect(TokenType.tk_identifier).text)(stream, Stack!ASTNode(), TokenType.tk_attribute);
+			b) => a.expect(TokenType.tk_identifier).text)(stream, new Stack!ASTNode(), TokenType.tk_attribute);
 }
 
-string parseQuantifiedName(TokenStream stream)
+string parseQuantifiedName(TokenStream stream, Stack!ASTNode stack = null)
 {
 	return parseDelimitedList!(string,(a, b) => a.expect(TokenType.tk_identifier).text)(stream,
-		Stack!ASTNode(), TokenType.tk_dot).join('.');
+		stack, TokenType.tk_dot).join('.');
 }
 
 auto parseDelimitedList(T,alias fun)(TokenStream stream, Stack!ASTNode stack, TokenType delimiter)

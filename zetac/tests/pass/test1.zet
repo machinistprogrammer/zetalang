@@ -1,0 +1,26 @@
+module test1; //inline comment
+/*
+line1
+line2
+line3
+*/
+
+function main ( def args ) 
+{
+	def test = new TestClass(args);
+}
+
+@package class TestClass inherits Object
+{
+	@private def args;
+
+	function this(def args)
+	{
+		this.args = args;
+	}
+
+	function getArgs()
+	{
+		return args;
+	}
+}

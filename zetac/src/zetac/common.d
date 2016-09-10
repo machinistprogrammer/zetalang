@@ -42,7 +42,7 @@ class CompilerError : Exception
     }
 }
 
-struct Stack(T)
+class Stack(T)
 {
 	private SList!T stack;
 	

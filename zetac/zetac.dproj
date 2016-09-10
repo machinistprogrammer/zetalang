@@ -49,9 +49,13 @@
     <Compile Include="src\zetac\parser.d" />
     <Compile Include="src\zetac\utils.d" />
     <Compile Include="src\app.d" />
+    <Compile Include="src\zetac\cursor.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\zetac\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tests\pass\test1.zet" />
   </ItemGroup>
 </Project>

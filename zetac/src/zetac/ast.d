@@ -28,7 +28,6 @@ interface ASTVisitor
     void visit(ASTIndex that);
     void visit(ASTAssign that);
     void visit(ASTNew that);
-    void visit(ASTCast that);
 	void visit(ASTIdentifier that);
 	void visit(ASTLookup that);
     void visit(ASTStringLiteral that);
@@ -79,7 +78,7 @@ class ASTFunction : ASTDecl
 
 class ASTClass : ASTDecl
 {
-    ASTNode[] inherits;
+    string[] inherits;
     ASTDecl[] block;
 
     mixin ASTDeclCtor;
@@ -88,7 +87,7 @@ class ASTClass : ASTDecl
 
 class ASTInterface : ASTDecl
 {
-    ASTNode[] inherits;
+    string[] inherits;
     ASTDecl[] block;
 
     mixin ASTDeclCtor;
@@ -240,17 +239,8 @@ class ASTAssign : ASTNode
 
 class ASTNew : ASTNode
 {
-    ASTNode type;
+    string type;
     ASTNode[] args;
-
-    mixin ASTNodeCtor;
-    mixin ASTAccepter;
-}
-
-class ASTCast : ASTNode
-{
-    ASTNode type;
-    ASTNode exp;
 
     mixin ASTNodeCtor;
     mixin ASTAccepter;
