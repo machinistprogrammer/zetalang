@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ADABC690-D9FC-4E3F-A839-13094BD1E057}</ProjectGuid>
+    <ProjectGuid>{6E771450-D587-4680-BA48-6FCD0506B255}</ProjectGuid>
     <BaseDirectory>.</BaseDirectory>
     <Compiler>DMD2</Compiler>
     <PreferOneStepBuild>true</PreferOneStepBuild>
@@ -15,7 +15,7 @@
     <OutputPath>bin\Debug</OutputPath>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>Zetac</OutputName>
+    <OutputName>Itm</OutputName>
     <UnittestMode>false</UnittestMode>
     <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
     <ObjectsDirectory>obj\Debug</ObjectsDirectory>
@@ -25,7 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>Zetac</OutputName>
+    <OutputName>Itm</OutputName>
     <UnittestMode>false</UnittestMode>
     <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
     <ObjectsDirectory>obj\Release</ObjectsDirectory>
@@ -36,22 +36,21 @@
     <OutputPath>bin\Unittest</OutputPath>
     <Externalconsole>true</Externalconsole>
     <Target>Executable</Target>
-    <OutputName>Zetac</OutputName>
+    <OutputName>Itm</OutputName>
     <UnittestMode>true</UnittestMode>
     <LinkinThirdPartyLibraries>false</LinkinThirdPartyLibraries>
     <ObjectsDirectory>obj\Unittest</ObjectsDirectory>
     <DebugLevel>0</DebugLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="src\zetac\ast.d" />
-    <Compile Include="src\zetac\common.d" />
-    <Compile Include="src\zetac\lexer.d" />
-    <Compile Include="src\zetac\parser.d" />
-    <Compile Include="src\zetac\utils.d" />
-    <Compile Include="src\app.d" />
+    <Compile Include="main.d" />
+    <Compile Include="src\itm\builder.d" />
+    <Compile Include="src\itm\builtins.d" />
+    <Compile Include="src\itm\types.d" />
+    <Compile Include="src\itm\vm.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
-    <Folder Include="src\zetac\" />
+    <Folder Include="src\itm\" />
   </ItemGroup>
 </Project>
