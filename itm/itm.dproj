@@ -43,11 +43,11 @@
     <DebugLevel>0</DebugLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="main.d" />
     <Compile Include="src\itm\builder.d" />
     <Compile Include="src\itm\builtins.d" />
     <Compile Include="src\itm\types.d" />
     <Compile Include="src\itm\vm.d" />
+    <Compile Include="app.d" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />

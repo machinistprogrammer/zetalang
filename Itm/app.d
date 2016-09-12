@@ -1,4 +1,4 @@
-﻿module main;
+﻿module app;
 
 import std.stdio;
 
